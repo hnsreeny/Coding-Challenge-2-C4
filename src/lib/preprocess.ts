@@ -14,3 +14,22 @@ export function extractRestrictions(text: string): string[] {
 
   return matches ?? [];
 }
+
+
+export function extractRestrictions(
+  text: string
+): string[] {
+  const restrictions: string[] = [];
+
+  const matches = text.match(
+    /PUBLICATIONx(?:NOTx)?INx[A-Z]{3}/g
+  );
+
+  if (!matches) return restrictions;
+
+  matches.forEach((match) => {
+    restrictions.push(match);
+  });
+
+  return restrictions;
+}
