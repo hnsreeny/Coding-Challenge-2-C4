@@ -1,6 +1,10 @@
+
+
 export function normalizeText(text: string): string {
   return text
     .toLowerCase()
+    .replace(/x/g, " ")
+    .replace(/[^\w\s]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
