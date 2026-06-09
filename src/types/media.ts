@@ -4,3 +4,9 @@ export interface MediaItem {
   fotografen: string;
   datum: string;
 }
+
+
+export interface ProcessedMediaItem extends MediaItem {
+  normalizedText: string;
+  restrictions: string[];
+}
