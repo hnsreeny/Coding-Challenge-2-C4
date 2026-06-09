@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { mediaItems } from "@/lib/data";
+// import { mediaItems } from "@/lib/data";
+import { mediaItems } from "@/lib/media.repository";
 // search using GET
 export async function GET(req: NextRequest) {
     // getting the params
@@ -7,8 +8,9 @@ export async function GET(req: NextRequest) {
     req.nextUrl.searchParams.get("q")?.toLowerCase() || "";
 // filtter 
   const results = mediaItems.filter((item) =>
-    item.suchtext.toLowerCase().includes(query)
-  );
+item.normalizedText.includes(
+  query.toLowerCase()
+)  );
 // json the resutls
   return NextResponse.json({
     items: results,
