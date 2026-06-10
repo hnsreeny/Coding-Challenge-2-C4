@@ -24,6 +24,16 @@ export default function Home() {
     const timeout = setTimeout(async () => {
       try {
         setLoading(true);
+         const params = new URLSearchParams();
+
+params.set("q", query);
+params.set("page", "1");
+params.set("pageSize", "20");
+
+if (credit) params.set("credit", credit);
+if (from) params.set("from", from);
+if (to) params.set("to", to);
+if (sort) params.set("sort", sort);
 
         const response = await fetch(
           `/api/search?q=${encodeURIComponent(query)}`
