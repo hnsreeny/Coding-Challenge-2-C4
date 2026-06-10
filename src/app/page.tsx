@@ -25,54 +25,23 @@ export default function Home() {
     return () => clearTimeout(timeout);
   }, [query]);
 
-  return (
-    <main className="max-w-5xl mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">
-        IMAGO Search
-      </h1>
+ return (
+    <main className="min-h-screen bg-slate-100">
+      <div className="max-w-7xl mx-auto px-6 py-10">
 
-      <input
-        type="text"
-        placeholder="Search..."
-        value={query}
-        onChange={(e) =>
-          setQuery(e.target.value)
-        }
-        className="w-full border rounded p-3"
-      />
-{/* if loading takes more time */}
-      {loading && (
-        <p className="mt-4">
-          Searching...
-        </p>
-      )}
-{/* map out the results */}
-      <div className="mt-6 space-y-4">
-        {results.map((item) => (
-          <div
-            key={item.id}
-            className="border rounded p-4"
-          >
-            <div>
-              <strong>
-                {item.bildnummer}
-              </strong>
-            </div>
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold">
+            IMAGO Search
+          </h1>
 
-            <div>
-              {item.fotografen}
-            </div>
+          <p className="text-slate-500 mt-2">
+            Search media items and metadata
+          </p>
+        </div>
 
-            <div>
-              {item.datum}
-            </div>
-
-            <div className="mt-2 text-sm">
-              {item.suchtext}
-            </div>
-          </div>
-        ))}
       </div>
     </main>
   );
+
+
 }
