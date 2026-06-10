@@ -1,62 +1,68 @@
 import { NextRequest, NextResponse } from "next/server";
-// import { mediaItems } from "@/lib/data";
-import { mediaItems } from "@/lib/media.repository";
-import { parseGermanDate } from "@/lib/date";
-// search using GET
-export async function GET(req: NextRequest) {
-    // getting the params
-  const query =
-    req.nextUrl.searchParams.get("q")?.toLowerCase() || "";
-    const from =
-  req.nextUrl.searchParams.get("from");
 
-const to =
-  req.nextUrl.searchParams.get("to");
-// pagination
-  const page = Number(
-    req.nextUrl.searchParams.get("page") || "1"
-  );
-  // Credit Filter
+import {
+  searchMedia,
+  paginate,
+} from "@/lib/search.service";
+
+export async function GET(
+  req: NextRequest
+) {
+    // getting params
+  const query =
+    req.nextUrl.searchParams
+      .get("q")
+      ?.toLowerCase() || "";
+
   const credit =
-  req.nextUrl.searchParams.get("credit");
+    req.nextUrl.searchParams.get(
+      "credit"
+    );
+
+  const from =
+    req.nextUrl.searchParams.get(
+      "from"
+    );
+
+  const to =
+    req.nextUrl.searchParams.get(
+      "to"
+    );
+// Sorting
+  const sort =
+    req.nextUrl.searchParams.get(
+      "sort"
+    );
+// Numbers
+  const page = Number(
+    req.nextUrl.searchParams.get(
+      "page"
+    ) || "1"
+  );
 
   const pageSize = Number(
-    req.nextUrl.searchParams.get("pageSize") || "20"
+    req.nextUrl.searchParams.get(
+      "pageSize"
+    ) || "20"
   );
-// filtter 
-  let results = mediaItems.filter((item) =>
-item.normalizedText.includes(
-  query.toLowerCase()
-)  );
 
-if (credit) {
-  results = results.filter((item) =>
-    item.fotografen === credit
+  const results = searchMedia({
+    query,
+    credit,
+    from,
+    to,
+    sort,
+  });
+
+  const paginated = paginate(
+    results,
+    page,
+    pageSize
   );
-}
-
-if (from) {
-  const fromDate = new Date(from);
-
-  results = results.filter(
-    (item) =>
-      parseGermanDate(item.datum) >=
-      fromDate
-  );
-}
-// Date Filter
-if (to) {
-  const toDate = new Date(to);
-
-  results = results.filter(
-    (item) =>
-      parseGermanDate(item.datum) <=
-      toDate
-  );
-}
-// json the resutls
+// setting json result
   return NextResponse.json({
-    items: results,
-    total: results.length,
+    ...paginated,
+    page,
+    pageSize,
   });
 }
