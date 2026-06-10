@@ -54,7 +54,7 @@ if (sort) params.set("sort", sort);
 
   return (
     <main className="min-h-screen bg-slate-100">
-      <div className="max-w-7xl mx-auto px-6 py-10">
+      {/* <div className="max-w-7xl mx-auto px-6 py-10"> */}
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold">
@@ -103,25 +103,38 @@ if (sort) params.set("sort", sort);
             gap-4
           "
         >
-          <select className="border rounded-lg p-3">
-            <option>All Credits</option>
-          </select>
+      <select
+  className="border rounded-lg p-3"
+  value={credit}
+  onChange={(e) => setCredit(e.target.value)}
+>
+  <option value="">All Credits</option>
+  <option value="IMAGO / Westend61">
+    IMAGO / Westend61
+  </option>
+</select>
 
-          <input
-            type="date"
-            className="border rounded-lg p-3"
-          />
+     <input
+  type="date"
+  className="border rounded-lg p-3"
+  value={from}
+  onChange={(e) => setFrom(e.target.value)}
+/>
 
-          <input
-            type="date"
-            className="border rounded-lg p-3"
-          />
-
-          <select className="border rounded-lg p-3">
-            <option>Date Desc</option>
-            <option>Date Asc</option>
-          </select>
-        </div>
+<input
+  type="date"
+  className="border rounded-lg p-3"
+  value={to}
+  onChange={(e) => setTo(e.target.value)}
+/>
+<select
+  className="border rounded-lg p-3"
+  value={sort}
+  onChange={(e) => setSort(e.target.value)}
+>
+  <option value="date_desc">Newest First</option>
+  <option value="date_asc">Oldest First</option>
+</select>
 
         {/* Loading */}
         {loading && (
